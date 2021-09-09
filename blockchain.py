@@ -33,3 +33,16 @@ class Blockchain(object):
 
         return nonce
 
+    # hashes the content of a block and check to see if the block's hash meets the difficulty target
+    def valid_proof(self, index, hash_of_previous_block, transactions, nonce):
+
+        # create a stirng containing the hash of the previous block and the block content, including the nonce
+
+        content = f'{index}{hash_of_previous_block}{transactions}{nonce}'.encode()
+
+        # hash using sha256
+        content_hash = hashlib.sha256(content).hexdigest()
+
+        # check if the hash meets the difficulty target
+        return content_hash[:len(self.difficulty_target)] == self.difficulty_target
+
